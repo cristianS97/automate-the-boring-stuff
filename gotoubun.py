@@ -12,6 +12,9 @@ headers = {
     'user-agent': 'Mozilla/5.0 (Windows NT 6.1; rv:52.0) Gecko/20100101 Firefox/52.0'
 }
 
+# Nombre del anime a buscar
+nombre = "5-TOUBUN NO HANAYOME ∬"
+
 # Objeto para interactuar con las notificaciones de windows
 toaster = ToastNotifier()
 
@@ -37,7 +40,7 @@ while True:
         estreno = anime.find('i', class_='clock-icon').text.strip()
 
         # Consultamos si se encontró el ánime deseado
-        if 'hanayome' in titulo.lower():
+        if nombre.lower() in titulo.lower():
             encontrado = True
             print(titulo)
             print(episodio)
@@ -50,7 +53,7 @@ while True:
     if encontrado:
         # Mensaje que contiene la hora en que se encontró el anime
         mensaje = f'{time.strftime("%H:%M:%S")} -> Estrenado'
-        toaster.show_toast('Go Toubun no Hanayome', mensaje, duration=5)
+        toaster.show_toast(nombre, mensaje, duration=5)
         break
 
     time.sleep(random.uniform(6.0, 8.0))
