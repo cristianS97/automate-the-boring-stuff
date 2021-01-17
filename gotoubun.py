@@ -22,7 +22,7 @@ toaster = ToastNotifier()
 while True:
     # Consultamos la url
     response = requests.get(url, headers=headers)
-    print(f'Estado respuesta: {response.status_code}')
+    print(f'{time.strftime("%H:%M:%S")} Estado respuesta: {response.status_code}')
     # Creamos el árbol html
     soup = BeautifulSoup(response.text)
 
@@ -36,7 +36,7 @@ while True:
     for anime in animes:
         # Obtenemos sus datos
         titulo = anime.find('h2').text.strip()
-        episodio = anime.find('span', class_='episode').text.strip()
+        episodio = anime.find('span', class_='episode').text.split('\n')[-1].strip()
         estreno = anime.find('i', class_='clock-icon').text.strip()
 
         # Consultamos si se encontró el ánime deseado
@@ -53,7 +53,7 @@ while True:
     if encontrado:
         # Mensaje que contiene la hora en que se encontró el anime
         mensaje = f'{time.strftime("%H:%M:%S")} -> Estrenado'
-        toaster.show_toast(nombre, mensaje, duration=5)
+        toaster.show_toast(f'{titulo} - {episodio}', mensaje, duration=5)
         break
 
     time.sleep(random.uniform(6.0, 8.0))
